@@ -21,48 +21,40 @@ function Contact() {
 
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  try {
+    const response = await fetch(
+      "https://personalportfolio-1-3ttd.onrender.com/api/contact",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
-    try {
+    const data = await response.json();
 
-      const response = await fetch(
-        "https://personalportfolio-1-3ttd.onrender.com/api/contact",
-        {
-
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json"
-          },
-
-          body: JSON.stringify(formData)
-
-        }
-      );
-
-      const data = await response.json();
-
-      alert(data.message);
-
-      setFormData({
-
-        name: "",
-        email: "",
-        message: ""
-
-      });
-
+    if (!response.ok) {
+      throw new Error(data.error || "Something went wrong");
     }
 
-    catch (error) {
+    alert("Message sent successfully ✅");
 
-      console.log(error);
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+    });
 
-    }
-
-  };
+  } catch (error) {
+    console.log(error);
+    alert("Failed to send message ❌ Check backend or MongoDB");
+  }
+};
 
   return (
 
