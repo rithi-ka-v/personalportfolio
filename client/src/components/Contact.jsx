@@ -28,7 +28,7 @@ function Contact() {
     try {
 
       const response = await fetch(
-        "http://localhost:5000/api/contact",
+        "https://personalportfolio-1-3ttd.onrender.com/api/contact",
         {
 
           method: "POST",
